@@ -3,7 +3,11 @@ kind: Service
 metadata:
   name: nginx-service
 spec:
-  type: ClusterIP
   selector:
-    app: nginx
+    app: nginx             # Make sure this matches your pod labels
+  ports:
+    - protocol: TCP
+      port: 80             # Service port
+      targetPort: 80       # Pod container port
+  type: ClusterIP          # Default type, can be omitted
 
