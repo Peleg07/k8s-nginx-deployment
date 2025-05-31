@@ -15,7 +15,7 @@ spec:
       volumes:
         - name: vol-nginx
           configMap:
-            name: nginx-index
+            name: cm-nginx-index
       containers:
       - name: nginx
         image: nginx:stable
