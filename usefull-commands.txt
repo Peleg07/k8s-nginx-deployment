@@ -4,4 +4,14 @@
 
 
 ## argocd
-1. kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+1. get argocd admin password
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
+
+## ssh-key
+1. generate ssh-key
+ssh-keygen -t rsa -b 4096 -C "your.email@example.com"
+
+
+
+

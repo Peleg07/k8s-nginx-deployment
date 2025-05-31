@@ -12,9 +12,17 @@ spec:
       labels:
         app: nginx
     spec:
+      volumes:
+        - name: vol-nginx
+          configMap:
+            name: nginx-index
       containers:
       - name: nginx
         image: nginx:stable
         ports:
         - containerPort: 80
+        volumeMounts:
+          - name: vol-nginx
+            mountPath: /usr/share/nginx/html/index.html
+            subPath: index.html
 
