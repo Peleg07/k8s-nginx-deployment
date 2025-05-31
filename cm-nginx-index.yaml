@@ -33,7 +33,7 @@ data:
         }
     
         .container {
-          max-width: 800px;
+          max-width: 900px;
           margin: 40px auto;
           padding: 20px;
           background-color: #1c1c1e;
@@ -92,6 +92,24 @@ data:
           background-color: #333;
         }
     
+        .action-btn {
+          padding: 6px 10px;
+          margin-left: 5px;
+          border-radius: 3px;
+          font-size: 12px;
+          cursor: pointer;
+        }
+    
+        .edit-btn {
+          background-color: #ffc107;
+          color: #000;
+        }
+    
+        .remove-btn {
+          background-color: #dc3545;
+          color: white;
+        }
+    
         .footer {
           text-align: center;
           font-size: 12px;
@@ -120,6 +138,7 @@ data:
               <th>Units</th>
               <th>Bought Price</th>
               <th>Total Cost</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -129,7 +148,7 @@ data:
       </div>
     
       <div class="footer">
-        Built with using HTML, CSS & JS
+        Build by Peleg Levy
       </div>
     
       <script>
@@ -145,21 +164,50 @@ data:
           const total = (units * price).toFixed(2);
     
           if (ticker && units && price) {
-            const row = document.createElement('tr');
-    
-            row.innerHTML = `
-              <td>${ticker}</td>
-              <td>${units}</td>
-              <td>$${price.toFixed(2)}</td>
-              <td>$${total}</td>
-            `;
-    
-            tableBody.appendChild(row);
-    
-            // Reset the form
+            addRow(ticker, units, price, total);
             form.reset();
           }
         });
+    
+        function addRow(ticker, units, price, total) {
+          const row = document.createElement('tr');
+    
+          row.innerHTML = `
+            <td>${ticker}</td>
+            <td>${units}</td>
+            <td>$${price.toFixed(2)}</td>
+            <td>$${total}</td>
+            <td>
+              <button class="action-btn edit-btn">Edit</button>
+              <button class="action-btn remove-btn">Remove</button>
+            </td>
+          `;
+    
+          tableBody.appendChild(row);
+    
+          const editBtn = row.querySelector('.edit-btn');
+          const removeBtn = row.querySelector('.remove-btn');
+    
+          editBtn.addEventListener('click', () => {
+            const newTicker = prompt("Enter new ticker:", ticker);
+            const newUnits = parseFloat(prompt("Enter new units:", units));
+            const newPrice = parseFloat(prompt("Enter new bought price:", price));
+    
+            if (newTicker && newUnits && newPrice) {
+              const newTotal = (newUnits * newPrice).toFixed(2);
+              row.children[0].textContent = newTicker.toUpperCase();
+              row.children[1].textContent = newUnits;
+              row.children[2].textContent = `$${newPrice.toFixed(2)}`;
+              row.children[3].textContent = `$${newTotal}`;
+            }
+          });
+    
+          removeBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to remove this stock?')) {
+              row.remove();
+            }
+          });
+        }
       </script>
     </body>
     </html>
